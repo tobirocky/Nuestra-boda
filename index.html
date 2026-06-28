@@ -39,6 +39,7 @@
             color: #000000;
         }
 
+        /* AJUSTE AQUÍ: Valores del clip-path adaptados a la nueva altura con la galería integrada */
         .gold-hexagon-frame {
             position: absolute;
             top: 20px;
@@ -46,7 +47,7 @@
             right: 20px;
             bottom: 20px;
             border: 2px solid #b5995e;
-            clip-path: polygon(50% 0%, 100% 20%, 100% 80%, 50% 100%, 0% 80%, 0% 20%);
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%, 0% 0%);
             pointer-events: none;
             opacity: 0.8;
             z-index: 1;
@@ -168,7 +169,6 @@
             margin: 15px 0 2px 0;
         }
 
-        /* CORRECCIÓN AQUÍ: Se añade :visited para evitar el cambio a azul/morado */
         .location-link, .location-link:visited {
             color: #96793b;
             text-decoration: none;
@@ -233,6 +233,52 @@
             letter-spacing: 1px;
             color: #777;
             margin-top: 2px;
+        }
+
+        /* NUEVOS ESTILOS PARA LA GALERÍA */
+        .gallery-section {
+            margin-top: 35px;
+            border-top: 1px double #b5995e;
+            padding-top: 25px;
+        }
+
+        .gallery-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 36px;
+            color: #96793b;
+            margin: 0 0 15px 0;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%;
+            overflow: hidden;
+            border: 1px solid #e2d7be;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            background-color: #fff;
+        }
+
+        .gallery-item img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item img:hover {
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -321,30 +367,45 @@
                     </div>
                 </div>
             </div>
+
+            <div class="gallery-section">
+                <h2 class="gallery-title">Galería</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="foto1.jpg" alt="Boda Jocelyn y Eduardo 1">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="foto2.jpg" alt="Boda Jocelyn y Eduardo 2">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="foto3.jpg" alt="Boda Jocelyn y Eduardo 3">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="foto4.jpg" alt="Boda Jocelyn y Eduardo 4">
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
     <script>
-        // Fecha de la boda: 27 de Marzo de 2027 a las 18:30
         const fechaBoda = new Date("Mar 27, 2027 18:30:00").getTime();
 
         const contador = setInterval(function() {
             const ahora = new Date().getTime();
             const distancia = fechaBoda - ahora;
 
-            // Cálculos de tiempo
             const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
             const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
             const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
 
-            // Vinculación corregida con el HTML
             document.getElementById("days").innerText = dias >= 0 ? dias : "00";
             document.getElementById("hours").innerText = horas < 10 && horas >= 0 ? "0" + horas : (horas < 0 ? "00" : horas);
-            document.getElementById("minutes").innerText = minutos < 10 && minutos >= 0 ? "0" + minutes : (minutos < 0 ? "00" : minutos);
+            document.getElementById("minutes").innerText = minutos < 10 && minutes >= 0 ? "0" + minutos : (minutos < 0 ? "00" : minutos);
             document.getElementById("seconds").innerText = segundos < 10 && segundos >= 0 ? "0" + segundos : (segundos < 0 ? "00" : segundos);
 
-            // Si el tiempo termina
             if (distancia < 0) {
                 clearInterval(contador);
             }
